@@ -1,4 +1,4 @@
-# Team Deathmatch（团队死斗）
+# Z80Z Team Deathmatch（团队死斗）
 
 A multiplayer FPS-style team deathmatch mod for Minecraft 1.20.1 Forge — lobbies, matchmaking, three game modes, a map editor, a HUD editor, an economy system, a match shop and a weapon repository.
 
@@ -46,7 +46,7 @@ Minecraft 1.20.1 · Forge 47.4.0 · Java 17 · Client and server
 ## 安装
 
 1. 安装 [Minecraft Forge 1.20.1-47.4.0](https://files.minecraftforge.net/net/minecraftforge/forge/index_1.20.1.html)。
-2. 从 [Releases](https://github.com/Z80Z99/team-deathmatch-mod/releases) 下载最新 jar，放入客户端和服务端的 `mods` 文件夹。
+2. 从 [Releases](https://github.com/Z80Z99/z80z-team-deathmatch/releases) 下载最新 jar，放入客户端和服务端的 `mods` 文件夹。
 3. 首次启动后会生成 `config/fpsmod/` 配置目录，服务器和客户端都需要安装本模组。
 
 ## 按键
@@ -84,7 +84,7 @@ Minecraft 1.20.1 · Forge 47.4.0 · Java 17 · Client and server
 ./gradlew build
 ```
 
-产物位于 `build/libs/generated_mod-<版本>.jar`。
+产物位于 `build/libs/z80z-team-deathmatch-<版本>.jar`。
 
 ## 文档
 
