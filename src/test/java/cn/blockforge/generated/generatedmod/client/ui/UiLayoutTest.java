@@ -48,7 +48,7 @@ class UiLayoutTest {
             init.invoke(screen);
             try (UiRenderCapture capture = new UiRenderCapture(640, 360)) {
                 screen.render(capture.graphics, -1000, -1000, 0);
-                assertEquals(0xFF25262A, capture.pixel(300, 170),
+                assertEquals(0xFF282D31, capture.pixel(300, 170),
                         () -> "pixel=" + Integer.toHexString(capture.pixel(300, 170)));
             }
             Method save = HudLayoutScreen.class.getDeclaredMethod("saveDraft");

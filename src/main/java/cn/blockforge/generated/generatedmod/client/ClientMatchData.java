@@ -353,7 +353,7 @@ public final class ClientMatchData {
             case FROZEN -> "阶段冻结";
             case BUYING -> "购买装备";
             case PLAYING -> mode == GameMode.SEARCH_DESTROY ? "行动阶段" : "进行中";
-            case ROUND_END -> "回合结束";
+            case ROUND_END -> "回合结算";
             case TERRAIN_RESTORING -> "地形恢复";
             case MAP_RESETTING -> "地图恢复";
             case MATCH_END -> "比赛结束";

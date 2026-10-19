@@ -12,6 +12,7 @@ import cn.blockforge.generated.generatedmod.network.packet.MapRegionPacket;
 import cn.blockforge.generated.generatedmod.network.packet.MatchmakingActionPacket;
 import cn.blockforge.generated.generatedmod.network.packet.MatchmakingSyncPacket;
 import cn.blockforge.generated.generatedmod.network.packet.MatchSyncPacket;
+import cn.blockforge.generated.generatedmod.network.packet.MatchRegionsSyncPacket;
 import cn.blockforge.generated.generatedmod.network.packet.RoomActionPacket;
 import cn.blockforge.generated.generatedmod.network.packet.RoomMapListSyncPacket;
 import cn.blockforge.generated.generatedmod.network.packet.RoomRulesPacket;
@@ -34,7 +35,7 @@ import net.minecraftforge.network.PacketDistributor;
 import net.minecraftforge.network.simple.SimpleChannel;
 
 public final class FpsTdmNetwork {
-    private static final String PROTOCOL_VERSION = "29";
+    private static final String PROTOCOL_VERSION = "31";
     private static SimpleChannel channel;
     private static int nextId;
 
@@ -54,6 +55,11 @@ public final class FpsTdmNetwork {
                 .encoder(MatchSyncPacket::encode)
                 .decoder(MatchSyncPacket::new)
                 .consumerMainThread(MatchSyncPacket::handle)
+                .add();
+        channel.messageBuilder(MatchRegionsSyncPacket.class, nextId(), NetworkDirection.PLAY_TO_CLIENT)
+                .encoder(MatchRegionsSyncPacket::encode)
+                .decoder(MatchRegionsSyncPacket::new)
+                .consumerMainThread(MatchRegionsSyncPacket::handle)
                 .add();
         channel.messageBuilder(ConfigSyncPacket.class, nextId(), NetworkDirection.PLAY_TO_CLIENT)
                 .encoder(ConfigSyncPacket::encode)

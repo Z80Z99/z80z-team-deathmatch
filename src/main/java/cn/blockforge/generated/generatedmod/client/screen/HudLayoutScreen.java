@@ -684,7 +684,7 @@ public final class HudLayoutScreen extends Screen implements cn.blockforge.gener
             conditions.addAll(List.of("feed", "notice", "notice_urgent", "event_active",
                     "team_c", "team_d", "death", "respawning", "respawn_waiting", "respawn_ready",
                     "returned", "alive", "playing", "warmup", "warmup_waiting", "warmup_countdown",
-                    "frozen", "round_end", "terrain_restoring", "map_resetting", "match_end",
+                    "frozen", "round_settlement", "round_end", "terrain_restoring", "map_resetting", "match_end",
                     "outside", "spectator", "round_odd", "round_even", "team_leading",
                     "team_trailing", "score_tied", "health_below:50", "health_above:50",
                     "armor_below:10", "kills_at_least:10", "deaths_at_least:5",
@@ -734,7 +734,8 @@ public final class HudLayoutScreen extends Screen implements cn.blockforge.gener
                     case "buying" -> "购买阶段";
                     case "frozen" -> "冻结阶段";
                     case "warmup_waiting" -> "热身等待玩家"; case "warmup_countdown" -> "热身开赛倒计时";
-                    case "round_end" -> "回合结束"; case "terrain_restoring" -> "地形恢复阶段";
+                    case "round_settlement" -> "回合结算阶段"; case "round_end" -> "回合结算（旧名称）";
+                    case "terrain_restoring" -> "地形恢复阶段";
                     case "map_resetting" -> "地图恢复阶段"; case "match_end" -> "比赛结束";
                     case "outside" -> "越界警告中"; case "spectator" -> "观战中";
                     case "round_odd" -> "奇数回合"; case "round_even" -> "偶数回合";

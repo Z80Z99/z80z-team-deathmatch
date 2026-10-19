@@ -24,12 +24,29 @@ public record MapRegion(
         boolean outline,
         boolean fill,
         int priority,
-        String notes) {
+        String notes,
+        boolean infiniteHeight) {
+
+    public MapRegion(String id, String displayName, Type type, MapDefinition.Region region,
+                     boolean visibleInMatch, int displayRange, Appearance appearance,
+                     Activation activation, String activationValue, int color, boolean outline,
+                     boolean fill, int priority, String notes) {
+        this(id, displayName, type, region, visibleInMatch, displayRange, appearance,
+                activation, activationValue, color, outline, fill, priority, notes, false);
+    }
+
+    public boolean contains(double x, double y, double z) {
+        if (!infiniteHeight) return region.contains(x, y, z);
+        return region.boxes().stream().anyMatch(box -> x >= box.min().getX()
+                && x < box.max().getX() + 1D && z >= box.min().getZ()
+                && z < box.max().getZ() + 1D);
+    }
 
     public MapRegion {
         id = normalizeId(id);
         displayName = displayName == null || displayName.isBlank() ? id : displayName;
         type = type == null ? Type.CUSTOM : type;
+        infiniteHeight = infiniteHeight && type != Type.BOUNDS && type != Type.RESET;
         region = region == null ? new MapDefinition.Region(new BlockPos(0, 0, 0), new BlockPos(0, 0, 0)) : region;
         visibleInMatch = visibleInMatch && type != Type.BOUNDS && type != Type.RESET;
         displayRange = Math.max(0, displayRange);
@@ -59,7 +76,7 @@ public record MapRegion(
 
     public MapRegion withId(String value) {
         return new MapRegion(value, displayName, type, region, visibleInMatch, displayRange,
-                appearance, activation, activationValue, color, outline, fill, priority, notes);
+                appearance, activation, activationValue, color, outline, fill, priority, notes, infiniteHeight);
     }
 
     /**
@@ -108,6 +125,7 @@ public record MapRegion(
         object.addProperty("fill", fill);
         object.addProperty("priority", priority);
         object.addProperty("notes", notes);
+        object.addProperty("infiniteHeight", infiniteHeight);
         return object;
     }
 
@@ -128,7 +146,7 @@ public record MapRegion(
                 bool(object, "outline", true),
                 bool(object, "fill", true),
                 integer(object, "priority", 0),
-                text(object, "notes", ""));
+                text(object, "notes", ""), bool(object, "infiniteHeight", false));
     }
 
     private static String text(JsonObject object, String name, String fallback) {
@@ -180,7 +198,7 @@ public record MapRegion(
 
     public enum Appearance {
         ALWAYS("always", "始终显示"),
-        NEARBY("nearby", "靠近显示"),
+        NEARBY("nearby", "靠近显示区域名字"),
         EDITOR_ONLY("editor_only", "仅编辑器显示"),
         HIDDEN("hidden", "隐藏");
 

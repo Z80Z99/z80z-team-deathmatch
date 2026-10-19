@@ -3,6 +3,8 @@ package cn.blockforge.generated.generatedmod.client;
 import cn.blockforge.generated.generatedmod.item.ModItems;
 import cn.blockforge.generated.generatedmod.map.MapEditorView;
 import cn.blockforge.generated.generatedmod.map.MapRegion;
+import cn.blockforge.generated.generatedmod.match.GameMode;
+import cn.blockforge.generated.generatedmod.match.MapRegionActivation;
 import cn.blockforge.generated.generatedmod.client.ui.UiTheme;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
@@ -11,7 +13,9 @@ import net.minecraft.core.BlockPos;
 import net.minecraftforge.client.gui.overlay.ForgeGui;
 
 import java.util.ArrayList;
+import java.util.EnumMap;
 import java.util.List;
+import java.util.Map;
 
 /** 手持地图道具时的左下操作提示与右下目标信息。 */
 public final class MapToolHud {
@@ -60,6 +64,11 @@ public final class MapToolHud {
         drawPanel(graphics, font, left, 8, screenHeight - 8 - left.size() * LINE_HEIGHT - 8,
                 PANEL_WIDTH, UiTheme.INFO);
 
+        List<String> summary = summaryLines(view);
+        int summaryWidth = Math.max(250, summary.stream().mapToInt(font::width).max().orElse(240) + 24);
+        drawPanel(graphics, font, summary, screenWidth - summaryWidth - 8, 8,
+                summaryWidth, UiTheme.SUCCESS);
+
         List<String> right = new ArrayList<>();
         MapRegion hovered = region(view, MapToolClientState.hoveredRegionId());
         if (hovered != null) {
@@ -83,6 +92,54 @@ public final class MapToolHud {
     private static MapRegion region(MapEditorView view, String id) {
         for (MapRegion region : view.regions()) if (region.id().equals(id)) return region;
         return null;
+    }
+
+    static List<String> summaryLines(MapEditorView view) {
+        if (view == null || !view.hasTarget()) {
+            return List.of("地图要素", "当前没有选中的地图", "模式就绪：均不可用（缺少地图）");
+        }
+        Map<MapRegion.Type, Integer> counts = new EnumMap<>(MapRegion.Type.class);
+        for (MapRegion region : view.regions()) counts.merge(region.type(), 1, Integer::sum);
+        int bombs = activeBombCount(view.regions());
+        List<String> lines = new ArrayList<>();
+        lines.add("地图要素 · " + (view.displayName().isBlank() ? view.mapId() : view.displayName()));
+        lines.add("基础：边界" + mark(view.bounds().present()) + " · 重置区" + mark(view.resetRegion().present()));
+        lines.add("复活点：A " + view.teamACount() + " · B " + view.teamBCount()
+                + " · C " + view.teamCCount() + " · D " + view.teamDCount()
+                + " · 观战 " + view.spectatorCount());
+        lines.add("玩法区：爆破 " + counts.getOrDefault(MapRegion.Type.BOMB, 0)
+                + "（有效 " + bombs + "） · 占领 " + counts.getOrDefault(MapRegion.Type.CAPTURE, 0)
+                + " · 热点 " + counts.getOrDefault(MapRegion.Type.HOTSPOT, 0));
+        lines.add("其他区：目标 " + counts.getOrDefault(MapRegion.Type.OBJECTIVE, 0)
+                + " · 自定义 " + counts.getOrDefault(MapRegion.Type.CUSTOM, 0)
+                + " · 其他 " + counts.getOrDefault(MapRegion.Type.OTHER, 0));
+        lines.add("模式就绪（仅检查地图要素）");
+        lines.add(modeLine(GameMode.TEAM_DEATHMATCH, view, bombs));
+        lines.add(modeLine(GameMode.SEARCH_DESTROY, view, bombs));
+        lines.add(modeLine(GameMode.LAST_STANDING, view, bombs));
+        return List.copyOf(lines);
+    }
+
+    private static int activeBombCount(List<MapRegion> regions) {
+        MapRegionActivation.Context context = new MapRegionActivation.Context(
+                true, GameMode.SEARCH_DESTROY, 1, 2, 2);
+        return (int) regions.stream().filter(region -> region.type() == MapRegion.Type.BOMB)
+                .filter(region -> MapRegionActivation.isActive(region, context)).count();
+    }
+
+    private static String modeLine(GameMode mode, MapEditorView view, int activeBombs) {
+        List<String> missing = new ArrayList<>();
+        if (!view.bounds().present()) missing.add("地图边界");
+        if (!view.resetRegion().present()) missing.add("重置区域");
+        if (view.teamACount() <= 0) missing.add("A队复活点");
+        if (view.teamBCount() <= 0) missing.add("B队复活点");
+        if (mode == GameMode.SEARCH_DESTROY && activeBombs <= 0) missing.add("有效爆破区");
+        return mode.displayName() + "：" + (missing.isEmpty()
+                ? "可用" : "缺少" + String.join("、", missing));
+    }
+
+    private static String mark(boolean present) {
+        return present ? "已设置" : "缺失";
     }
 
     private static void drawPanel(GuiGraphics graphics, Font font, List<String> lines,

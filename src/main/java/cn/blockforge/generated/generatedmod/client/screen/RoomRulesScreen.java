@@ -181,8 +181,8 @@ public final class RoomRulesScreen extends UiScreen {
                 "仅双队爆破生效：每 N 回合交换出生区。三队及以上保持各队独立出生区。");
         friendlyFireToggle = bool(4, 1, "友军伤害", current.friendlyFire(), editable);
 
-        roundEndDelayBox = integer(5, 0, "回合结算间隔/秒", current.roundEndDelaySeconds(), 3, editable,
-                "回合结束到下一回合开始的间隔。");
+        roundEndDelayBox = integer(5, 0, "回合结算阶段/秒", current.roundEndDelaySeconds(), 3, editable,
+                "所有模式在进入下一回合或比赛结束前的结算阶段时长，默认 10 秒。");
         matchEndDelayBox = integer(5, 1, "结算画面/秒", current.matchEndDelaySeconds(), 3, editable,
                 "整场比赛结束后结算画面的停留时间。");
         keepInventoryToggle = bool(6, 0, "死亡保留背包", current.keepInventoryOnDeath(), editable);
@@ -405,7 +405,7 @@ public final class RoomRulesScreen extends UiScreen {
         if (autoRespawnToggle != null) autoRespawnToggle.active = false;
         if (winBox != null) winBox.setEditable(mode == GameMode.SEARCH_DESTROY && editable());
         if (warmupBox != null) warmupBox.setEditable(false);
-        if (roundEndDelayBox != null && mode == GameMode.TEAM_DEATHMATCH) roundEndDelayBox.setEditable(false);
+        if (roundEndDelayBox != null) roundEndDelayBox.setEditable(editable());
         if (matchEndDelayBox != null && mode == GameMode.TEAM_DEATHMATCH) matchEndDelayBox.setEditable(false);
         if (keepInventoryToggle != null) keepInventoryToggle.active = false;
         if (suppressDeathToggle != null) suppressDeathToggle.active = false;
@@ -744,7 +744,7 @@ public final class RoomRulesScreen extends UiScreen {
             return "友军伤害";
         }
         if (row == 5) {
-            return column == 0 ? "回合结算间隔/秒" : "结算画面/秒";
+            return column == 0 ? "回合结算阶段/秒" : "结算画面/秒";
         }
         if (row == 6) {
             return column == 0 ? "死亡保留背包" : "隐藏死亡消息";

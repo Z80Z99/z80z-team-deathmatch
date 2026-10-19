@@ -179,6 +179,17 @@ class HudElementsTest {
         }
     }
 
+    @Test void roundSettlementConditionSupportsNewAndLegacyNames() {
+        var previous = ClientMatchData.state;
+        try {
+            ClientMatchData.state = cn.blockforge.generated.generatedmod.match.MatchState.ROUND_END;
+            assertTrue(HudParameters.visible("round_settlement", false));
+            assertTrue(HudParameters.visible("round_end", false));
+        } finally {
+            ClientMatchData.state = previous;
+        }
+    }
+
     @Test void externalEventsRegisterSourcesAndConditions() {
         HudApi.registerEvent("test:objective", "目标推进", "进入目标区域", 80, 70);
         try {

@@ -59,8 +59,8 @@ public final class FpsTdmConfig {
                     .comment("热身阶段时长")
                     .defineInRange("warmupDurationSeconds", 15, 0, 3600);
             roundEndDelaySeconds = builder
-                    .comment("回合结束到下一回合开始的间隔")
-                    .defineInRange("roundEndDelaySeconds", 5, 1, 3600);
+                    .comment("回合结算阶段时长；所有模式在进入下一回合或比赛结束前都会经过此阶段")
+                    .defineInRange("roundEndDelaySeconds", 10, 1, 3600);
             matchEndDelaySeconds = builder
                     .comment("比赛结束画面持续时间")
                     .defineInRange("matchEndDelaySeconds", 15, 1, 3600);

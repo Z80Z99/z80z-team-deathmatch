@@ -109,17 +109,17 @@ public final class HudAssemblies {
         long existing = draft.customElements(context).stream()
                 .filter(element -> element.placement().example().equals("事件·" + typeName))
                 .count();
-        int anchorY = 20 + (int) (existing % 4) * 9;
+        int anchorY = 18 + (int) (existing % 4) * 8;
         String prefix = "event:" + typeId;
         Builder b = new Builder(draft, context, "事件·" + typeName, 50, anchorY);
         b.condition = "event:" + typeId;
-        b.opacity = 88;
-        b.block("事件底板", 0, 0, 300, 46, 0xFF11161B);
-        b.block("事件强调线", 0, -23, 300, 2, 0xFF78D6A5);
-        b.text("事件标题", "{" + prefix + ":title}", -95, -8, 140, 0xFF78D6A5, 110);
-        b.text("事件计时", "{" + prefix + ":timer}", 118, -8, 68, 0xFFE8ECEF, 100);
-        b.line("事件说明", "{" + prefix + ":detail}", 0, 9, 280, 0xFFE8ECEF);
-        b.progress("事件进度", prefix + ":progress", 0, 17, 280, 0xFFFF7078);
+        b.opacity = 82;
+        b.block("事件底板", 0, 0, 276, 42, 0xFF10151A);
+        b.block("事件强调线", -137, 0, 3, 42, 0xFF78D6A5);
+        b.text("事件标题", "{" + prefix + ":title}", -73, -8, 128, 0xFF78D6A5, 105);
+        b.text("事件计时", "{" + prefix + ":timer}", 103, -8, 58, 0xFFF1F3F4, 100);
+        b.line("事件说明", "{" + prefix + ":detail}", 0, 8, 254, 0xFFD6DCE0);
+        b.progress("事件进度", prefix + ":progress", 0, 19, 254, 0xFFFF6570);
     }
 
     public static final class Builder {
@@ -198,7 +198,8 @@ public final class HudAssemblies {
             draft.addCustomElement(context, new CustomElement(id, type, text, anchorX, anchorY,
                     Math.max(1, width), Math.max(1, height), opacity, color, visible, source, scale,
                     type.equals("block"), false, false,
-                    new Placement(x, y, 624, 344, example, condition)));
+                    new Placement(x, y, 624, 344, example, condition)
+                            .withAnimation(condition.isBlank() ? "none" : "fade", 180)));
         }
     }
 }

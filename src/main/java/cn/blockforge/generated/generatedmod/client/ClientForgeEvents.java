@@ -1,6 +1,7 @@
 package cn.blockforge.generated.generatedmod.client;
 
 import cn.blockforge.generated.generatedmod.GeneratedMod;
+import cn.blockforge.generated.generatedmod.client.ClientMatchRegions;
 import cn.blockforge.generated.generatedmod.client.screen.HudLayoutScreen;
 import cn.blockforge.generated.generatedmod.client.screen.LobbyMenuScreen;
 import cn.blockforge.generated.generatedmod.client.screen.LobbyScreen;
@@ -265,6 +266,7 @@ public final class ClientForgeEvents {
         ClientLobbyData.clear();
         ClientMapEditorData.clear();
         ClientMatchData.clear();
+        ClientMatchRegions.clear();
         ClientHudDynamicStats.clear();
         HudBackground.clear();
     }

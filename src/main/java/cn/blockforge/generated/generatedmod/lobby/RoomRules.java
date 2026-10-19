@@ -146,7 +146,7 @@ public record RoomRules(GameMode mode,
     /** 离线或配置未就绪时的安全兜底，与服务器默认配置初值一致。 */
     public static RoomRules fallback() {
         return new RoomRules(GameMode.TEAM_DEATHMATCH, 25, 600, 1, 15, 5, true, false, 1, 2,
-                5, 15, true, true, true, true, TeamChangePolicy.ONLY_BEFORE_MATCH,
+                10, 15, true, true, true, true, TeamChangePolicy.ONLY_BEFORE_MATCH,
                 AutoBalanceMode.ON_JOIN_AND_MATCH_START, SpawnSelectionStrategy.RANDOM, 1).normalized();
     }
 

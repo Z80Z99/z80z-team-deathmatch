@@ -7,6 +7,7 @@ import cn.blockforge.generated.generatedmod.network.packet.BombSyncPacket;
 import cn.blockforge.generated.generatedmod.network.packet.BombPreviewPacket;
 import cn.blockforge.generated.generatedmod.network.FpsTdmNetwork;
 import net.minecraft.core.Direction;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
@@ -381,14 +382,24 @@ public final class ClassicBombManager {
     }
 
     private void explode(long now) {
-        ServerLevel level = server.getPlayerList().getPlayer(state.planterId()) != null
-                ? server.getPlayerList().getPlayer(state.planterId()).serverLevel()
-                : server.overworld();
+        double x = state.x();
+        double y = state.y();
+        double z = state.z();
+        ServerLevel level = plantedC4 != null && plantedC4.level() instanceof ServerLevel bombLevel
+                ? bombLevel
+                : server.getPlayerList().getPlayer(state.planterId()) != null
+                        ? server.getPlayerList().getPlayer(state.planterId()).serverLevel()
+                        : server.overworld();
         state.explode(now);
         discardPlantedC4();
         match.finishRound(match.attackingTeam(), false);
-        level.explode(null, state.x(), state.y(), state.z(), 6.0F,
-                Level.ExplosionInteraction.NONE);
+        level.explode(null, x, y, z, 6.0F, Level.ExplosionInteraction.NONE);
+        level.sendParticles(ParticleTypes.EXPLOSION_EMITTER, x, y + 0.3D, z,
+                3, 0.8D, 0.5D, 0.8D, 0.0D);
+        level.sendParticles(ParticleTypes.CAMPFIRE_COSY_SMOKE, x, y + 0.5D, z,
+                36, 2.0D, 1.2D, 2.0D, 0.04D);
+        level.sendParticles(ParticleTypes.FLAME, x, y + 0.3D, z,
+                48, 2.2D, 1.0D, 2.2D, 0.08D);
         match.recordEvent("C4 已引爆！");
         sync();
     }
@@ -724,7 +735,7 @@ public final class ClassicBombManager {
 
     private MapRegion activeSiteAt(double x, double y, double z) {
         return activeSites.stream()
-                .filter(region -> region.region().contains(x, y, z))
+                .filter(region -> region.contains(x, y, z))
                 .findFirst()
                 .orElse(null);
     }

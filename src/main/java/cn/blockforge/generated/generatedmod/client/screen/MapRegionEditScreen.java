@@ -26,6 +26,7 @@ public final class MapRegionEditScreen extends UiScreen {
     private UiButton saveButton;
     private UiCycleButton<MapRegion.Type> type;
     private UiCycleButton<Boolean> visible;
+    private UiCycleButton<Boolean> infiniteHeight;
     private UiCycleButton<Integer> range;
     private UiCycleButton<MapRegion.Appearance> appearance;
     private UiCycleButton<MapRegion.Activation> activation;
@@ -105,6 +106,15 @@ public final class MapRegionEditScreen extends UiScreen {
                 "内置边界和重置区域不能修改类型。",
                 "A～D队复活区域会参与固定出生点选择；其他玩法类型用于标识与显示。"), typeY);
 
+        int heightY = flowRow(BUTTON_HEIGHT);
+        infiniteHeight = flowWidget(new UiCycleButton<>(innerLeft, heightY, controlWidth, BUTTON_HEIGHT,
+                List.of(Boolean.FALSE, Boolean.TRUE), region.infiniteHeight(),
+                value -> value ? "纵向无限高度：开" : "纵向无限高度：关", ignored -> { },
+                "开启后区域判定忽略高度，保留水平形状。", UiButton.Kind.SECONDARY), heightY);
+        flowWidget(helpButton(helpX, heightY,
+                "开启后爆破区覆盖水平范围内的所有高度。",
+                "C4仍需有效安装表面；原有画笔选区高度会保留。"), heightY);
+
         int visibleY = flowRow(BUTTON_HEIGHT);
         visible = flowWidget(new UiCycleButton<>(innerLeft, visibleY, controlWidth, BUTTON_HEIGHT,
                 List.of(Boolean.TRUE, Boolean.FALSE), region.visibleInMatch(),
@@ -120,7 +130,7 @@ public final class MapRegionEditScreen extends UiScreen {
                 value -> value + " 格", ignored -> { },
                 "对局内显示这个区域的有效距离。", UiButton.Kind.SECONDARY), rangeY);
         flowWidget(helpButton(helpX, rangeY,
-                "玩家与区域中心距离超过该值时，对局提示会隐藏。",
+                "玩家与区域最近边缘距离超过该值时，区域名字会隐藏。",
                 "边界和重置区域不受此项影响。"), rangeY);
 
         int appearanceY = flowRow(BUTTON_HEIGHT);
@@ -130,7 +140,8 @@ public final class MapRegionEditScreen extends UiScreen {
                 region.appearance(), MapRegion.Appearance::displayName, ignored -> { },
                 "区域外观的显示策略。", UiButton.Kind.SECONDARY), appearanceY);
         flowWidget(helpButton(helpX, appearanceY,
-                "始终显示：不限制；靠近显示：受显示距离限制。",
+                "靠近显示区域名字：受显示距离限制，不绘制区域实体。",
+                "名字位于区域内部，高度尽量保持在玩家头顶上一格。",
                 "仅编辑器：只拿工具时显示；隐藏：不绘制区域。"), appearanceY);
 
         int activationY = flowRow(BUTTON_HEIGHT);
@@ -218,7 +229,7 @@ public final class MapRegionEditScreen extends UiScreen {
         MapRegion updated = new MapRegion(region.id(), name.getValue(), type.getValue(), region.region(),
                 visible.getValue(), range.getValue(), appearance.getValue(), activation.getValue(),
                 activationValue.getValue(), color.getValue(), outline.getValue(), fill.getValue(),
-                priority.getValue(), notes.getValue());
+                priority.getValue(), notes.getValue(), infiniteHeight.getValue());
         MapRegionPacket packet = new MapRegionPacket(MapRegionAction.SAVE, updated, 0);
         pendingRequestId = packet.requestId();
         waiting = true;

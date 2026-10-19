@@ -79,7 +79,7 @@ public record FpsTdmConfigValues(
         if ((error = range("击杀目标", targetKills, 0, 1000000)) != null) return error;
         if ((error = range("整场胜场目标", roundWinTarget, 1, 1000)) != null) return error;
         if ((error = range("热身时长", warmupDurationSeconds, 0, 3600)) != null) return error;
-        if ((error = range("回合结束间隔", roundEndDelaySeconds, 1, 3600)) != null) return error;
+        if ((error = range("回合结算时长", roundEndDelaySeconds, 1, 3600)) != null) return error;
         if ((error = range("比赛结束时长", matchEndDelaySeconds, 1, 3600)) != null) return error;
         if ((error = range("阵亡恢复时间", respawnDelaySeconds, 0, 3600)) != null) return error;
         if ((error = range("每队建议人数", minPlayersPerTeam, 1, 100)) != null) return error;

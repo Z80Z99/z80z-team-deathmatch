@@ -79,6 +79,7 @@ public final class MapRegionPacket {
         buffer.writeBoolean(region.fill());
         buffer.writeVarInt(region.priority());
         buffer.writeUtf(region.notes(), MAX_TEXT);
+        buffer.writeBoolean(region.infiniteHeight());
     }
 
     public static MapRegion readRegion(FriendlyByteBuf buffer) {
@@ -97,6 +98,6 @@ public final class MapRegionPacket {
                 MapRegion.Appearance.parse(buffer.readUtf(MAX_TEXT)),
                 MapRegion.Activation.parse(buffer.readUtf(MAX_TEXT)),
                 buffer.readUtf(MAX_TEXT), buffer.readInt(), buffer.readBoolean(), buffer.readBoolean(),
-                buffer.readVarInt(), buffer.readUtf(MAX_TEXT));
+                buffer.readVarInt(), buffer.readUtf(MAX_TEXT), buffer.readBoolean());
     }
 }

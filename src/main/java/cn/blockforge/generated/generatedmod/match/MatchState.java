@@ -9,6 +9,7 @@ public enum MatchState {
     /** Bomb mode pre-round preparation: store purchases and team-spawn barrier. */
     BUYING,
     PLAYING,
+    /** Universal post-round settlement phase before terrain restore, next round or match end. */
     ROUND_END,
     TERRAIN_RESTORING,
     MAP_RESETTING,

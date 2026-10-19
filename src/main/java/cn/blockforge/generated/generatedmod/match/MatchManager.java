@@ -6,8 +6,11 @@ import cn.blockforge.generated.generatedmod.economy.EconomyManager;
 import cn.blockforge.generated.generatedmod.integration.IntegrationManager;
 import cn.blockforge.generated.generatedmod.map.MapManager;
 import cn.blockforge.generated.generatedmod.match.MapRegionActivation;
+import cn.blockforge.generated.generatedmod.client.ClientMatchRegions;
+import cn.blockforge.generated.generatedmod.map.MapRegion;
 import cn.blockforge.generated.generatedmod.network.FpsTdmNetwork;
 import cn.blockforge.generated.generatedmod.network.packet.HudEventPacket;
+import cn.blockforge.generated.generatedmod.network.packet.MatchRegionsSyncPacket;
 import cn.blockforge.generated.generatedmod.network.packet.MatchSyncPacket;
 import cn.blockforge.generated.generatedmod.spawn.SpawnManager;
 import cn.blockforge.generated.generatedmod.spawn.SpawnPoint;
@@ -1207,6 +1210,14 @@ public final class MatchManager {
                 .withViewSettings(rulesPerspective(), rulesAllowViewSwitch())
                 .withTimeline(phaseTotalTicks(), matchTotalTicks());
         maps.currentMap().ifPresent(map -> packet.withBoundaryBox(map.bounds()));
+        // 玩法区域只下发服务器判定为激活且对局可见的部分（观战点/出生点/重置区不下发）。
+        List<MapRegion> visibleRegions = maps.currentMap()
+                .map(map -> MapRegionActivation.activeRegions(map.customRegions(), new MapRegionActivation.Context(
+                        isMatchActive(), rulesMode(), roundNumber,
+                        activeTeams().size(), teams.totalParticipants())).stream()
+                        .filter(ClientMatchRegions::clientVisible).toList())
+                .orElse(List.of());
+        FpsTdmNetwork.sendToPlayer(new MatchRegionsSyncPacket(visibleRegions), player);
         FpsTdmNetwork.sendToPlayer(packet, player);
     }
 

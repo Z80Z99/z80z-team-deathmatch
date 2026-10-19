@@ -12,6 +12,36 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class MapRegionTest {
+    @Test void infiniteHeightPreservesFootprintAndRoundTrips() {
+        var shape = MapDefinition.Region.composite(List.of(
+                new MapDefinition.Region(new BlockPos(0, 80, 0), new BlockPos(2, 81, 2)),
+                new MapDefinition.Region(new BlockPos(8, 80, 0), new BlockPos(9, 81, 2))));
+        var region = new MapRegion("bomb", "A", MapRegion.Type.BOMB, shape, true, 16,
+                MapRegion.Appearance.NEARBY, MapRegion.Activation.ALWAYS, "", 1, true, true, 0, "", true);
+        assertTrue(region.contains(1, -1000, 1));
+        assertTrue(region.contains(1, 1000, 1));
+        assertTrue(!region.contains(5, 80, 1));
+        assertEquals(region, MapRegion.fromJson(region.toJson()));
+        assertTrue(region.withId("copy").infiniteHeight());
+        var old = region.toJson();
+        old.remove("infiniteHeight");
+        assertTrue(!MapRegion.fromJson(old).contains(1, 0, 1));
+        var buffer = new net.minecraft.network.FriendlyByteBuf(io.netty.buffer.Unpooled.buffer());
+        try {
+            cn.blockforge.generated.generatedmod.network.packet.MapRegionPacket.writeRegion(buffer, region);
+            assertEquals(region, cn.blockforge.generated.generatedmod.network.packet.MapRegionPacket.readRegion(buffer));
+            assertEquals(0, buffer.readableBytes());
+        } finally { buffer.release(); }
+        var label = cn.blockforge.generated.generatedmod.client.RegionNamePlacement.position(region, 5, 4, 1);
+        assertEquals(5D, label.y);
+        assertTrue(region.contains(label.x, label.y, label.z));
+        org.junit.jupiter.api.Assertions.assertNull(
+                cn.blockforge.generated.generatedmod.client.RegionNamePlacement.position(region, 100, 4, 1));
+        var finite = MapRegion.fromJson(old);
+        var finiteLabel = cn.blockforge.generated.generatedmod.client.RegionNamePlacement.position(finite, 1, 81.8, 1);
+        assertTrue(finite.contains(finiteLabel.x, finiteLabel.y, finiteLabel.z));
+    }
+
     @Test void singleBlockEditsPreserveHolesAndDoNotFillGaps() {
         var cube = new MapDefinition.Region(BlockPos.ZERO, new BlockPos(2, 2, 2));
         var center = new BlockPos(1, 1, 1);

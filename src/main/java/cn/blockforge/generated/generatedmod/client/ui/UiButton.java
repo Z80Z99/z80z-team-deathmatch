@@ -11,6 +11,9 @@ public class UiButton extends Button {
     private final Kind kind;
     private boolean selected;
     private int historyIcon;
+    private long lastFrame;
+    private long pressedAt;
+    private float emphasis;
     public UiButton historyIcon(boolean redo) { historyIcon = redo ? 1 : -1; return this; }
 
     public UiButton(int x, int y, int width, int height, Component message, OnPress onPress, Kind kind) {
@@ -19,16 +22,34 @@ public class UiButton extends Button {
     }
 
     @Override
+    public void onPress() {
+        pressedAt = System.nanoTime();
+        super.onPress();
+    }
+
+    @Override
     protected void renderWidget(GuiGraphics graphics, int mouseX, int mouseY, float partialTick) {
         int x = getX();
         int y = getY();
-        int background = !active ? UiTheme.PANEL : selected ? kind.hover
-                : isHoveredOrFocused() ? kind.hover : kind.background;
-        int border = !active ? UiTheme.BORDER_SUBTLE : selected || isHoveredOrFocused() ? kind.accent : kind.border;
+        long now = System.nanoTime();
+        float elapsed = lastFrame == 0 ? 0 : Math.min(100, (now - lastFrame) / 1_000_000F);
+        lastFrame = now;
+        float target = active && (selected || isHoveredOrFocused()) ? 1 : 0;
+        emphasis += (target - emphasis) * (1 - (float) Math.exp(-elapsed / 65F));
+        float click = pressedAt == 0 ? 0 : Math.max(0, 1 - (now - pressedAt) / 180_000_000F);
+        int background = !active ? UiTheme.PANEL : UiTheme.blend(kind.background, kind.hover, emphasis);
+        background = UiTheme.blend(background, kind.accent, active ? click * 0.22F : 0);
+        int border = !active ? UiTheme.BORDER_SUBTLE : UiTheme.blend(kind.border, kind.accent, emphasis);
         int text = active ? UiTheme.TEXT : UiTheme.SUBTLE;
 
-        graphics.fill(x, y, x + width, y + height, background);
+        graphics.fillGradient(x, y, x + width, y + height,
+                UiTheme.blend(background, 0xFFFFFFFF, active ? 0.035F : 0), background);
         graphics.renderOutline(x, y, width, height, border);
+        if (active && emphasis > 0.01F && width > 4 && height > 4) {
+            int span = Math.max(1, Math.round((width - 4) * emphasis));
+            graphics.fill(x + 2, y + height - 2, x + 2 + span, y + height - 1,
+                    UiTheme.withAlpha(kind.accent, Math.round(emphasis * 85)));
+        }
         if (selected) graphics.fill(x + 1, y + height - 3, x + width - 1, y + height - 1, kind.accent);
         if (isFocused()) graphics.renderOutline(x + 2, y + 2, Math.max(1, width - 4), Math.max(1, height - 4), UiTheme.TEXT);
 
@@ -60,7 +81,7 @@ public class UiButton extends Button {
 
     public enum Kind {
         SECONDARY(0xFF25272B, 0xFF383B40, UiTheme.MUTED, UiTheme.BORDER_SUBTLE),
-        PRIMARY(0xFF315A3D, 0xFF41774F, UiTheme.ACCENT, 0xFF679F75),
+        PRIMARY(0xFF264D42, 0xFF367461, UiTheme.ACCENT, 0xFF507D6E),
         DANGER(0xFF38292D, 0xFF63353E, UiTheme.ERROR, 0xFF88505B),
         WARNING(0xFF37342A, 0xFF56503B, UiTheme.WARNING, 0xFF807653);
 

@@ -34,7 +34,11 @@ public final class MapRegionRenderer {
     public static void onRenderLevel(RenderLevelStageEvent event) {
         if (event.getStage() != RenderLevelStageEvent.Stage.AFTER_TRANSLUCENT_BLOCKS) return;
         Minecraft minecraft = Minecraft.getInstance();
-        if (minecraft.player == null || minecraft.level == null || !holdingMapTool(minecraft)) return;
+        if (minecraft.player == null || minecraft.level == null) return;
+        if (!holdingMapTool(minecraft)) {
+            renderMatchNames(event, minecraft);
+            return;
+        }
         MapEditorView view = ClientMapEditorData.view();
         if (!view.hasTarget()) {
             MapToolClientState.setHoveredRegion("");
@@ -101,6 +105,29 @@ public final class MapRegionRenderer {
 
     private static boolean holdingMapTool(Minecraft minecraft) {
         return holdingPlanner(minecraft) || holdingBrush(minecraft);
+    }
+
+    private static void renderMatchNames(RenderLevelStageEvent event, Minecraft minecraft) {
+        if (!ClientMatchData.inMatch() || minecraft.options.hideGui) return;
+        var player = minecraft.player;
+        Vec3 camera = event.getCamera().getPosition();
+        var buffers = minecraft.renderBuffers().bufferSource();
+        for (MapRegion region : ClientMatchRegions.regions()) {
+            if (!ClientMatchRegions.clientVisible(region)) continue;
+            Vec3 label = RegionNamePlacement.position(region, player.getX(),
+                    player.getY() + player.getBbHeight(), player.getZ());
+            if (label == null) continue;
+            PoseStack pose = event.getPoseStack();
+            pose.pushPose();
+            pose.translate(label.x - camera.x, label.y - camera.y, label.z - camera.z);
+            pose.mulPose(event.getCamera().rotation());
+            pose.scale(-0.025F, -0.025F, 0.025F);
+            minecraft.font.drawInBatch(region.displayName(), -minecraft.font.width(region.displayName()) / 2F,
+                    0, region.color() | 0xFF000000, false, pose.last().pose(), buffers,
+                    net.minecraft.client.gui.Font.DisplayMode.NORMAL, 0x55000000, 15728880);
+            pose.popPose();
+        }
+        buffers.endBatch();
     }
 
     private static boolean holdingPlanner(Minecraft minecraft) {

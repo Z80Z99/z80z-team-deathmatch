@@ -29,7 +29,7 @@ public final class MatchHudNotice {
             case FROZEN -> "冻结阶段";
             case BUYING -> "购买阶段";
             case PLAYING -> ClientMatchData.mode == GameMode.SEARCH_DESTROY ? "行动阶段" : "比赛进行中";
-            case ROUND_END -> "回合结束";
+            case ROUND_END -> "回合结算";
             case TERRAIN_RESTORING -> "地形恢复";
             case MAP_RESETTING -> "地图恢复";
             case MATCH_END -> ClientMatchData.winner == null ? "比赛平局"

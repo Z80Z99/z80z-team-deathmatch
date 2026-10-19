@@ -9,8 +9,8 @@ import java.util.Locale;
 /** 统一客户端 UI 视觉令牌和低开销绘制辅助。 */
 public final class UiTheme {
     public static final int SCREEN_TINT = 0x90101113;
-    public static final int PANEL = 0xF518191C;
-    public static final int PANEL_RAISED = 0xF525272B;
+    public static final int PANEL = 0xF5181B1E;
+    public static final int PANEL_RAISED = 0xF5292E32;
     public static final int PANEL_SELECTED = 0xFF303D35;
     public static final int SHADOW = 0x70000000;
     public static final int BORDER = 0xFF505359;
@@ -41,7 +41,10 @@ public final class UiTheme {
     public static void panel(GuiGraphics graphics, int x, int y, int width, int height, int accent) {
         if (width <= 0 || height <= 0) return;
         graphics.fill(x, y, x + width, y + height, PANEL);
-        graphics.fill(x, y, x + 3, y + Math.min(24, height), accent);
+        graphics.fillGradient(x + 1, y + 1, x + width - 1, y + Math.min(36, height),
+                PANEL_RAISED, PANEL);
+        graphics.renderOutline(x, y, width, height, BORDER_SUBTLE);
+        graphics.fill(x, y, x + Math.min(36, width), y + 2, accent);
     }
 
     public static void card(GuiGraphics graphics, int x, int y, int width, int height, int color) {
@@ -131,6 +134,17 @@ public final class UiTheme {
         int alpha = sourceAlpha == 0 ? 255 : sourceAlpha;
         alpha = alpha * Math.max(0, Math.min(100, alphaPercent)) / 100;
         return (alpha << 24) | (color & 0x00FFFFFF);
+    }
+
+    public static int blend(int from, int to, float amount) {
+        float t = Math.max(0, Math.min(1, amount));
+        int result = 0;
+        for (int shift = 0; shift <= 24; shift += 8) {
+            int a = (from >>> shift) & 255;
+            int b = (to >>> shift) & 255;
+            result |= Math.round(a + (b - a) * t) << shift;
+        }
+        return result;
     }
 
     public static Component text(String value) {

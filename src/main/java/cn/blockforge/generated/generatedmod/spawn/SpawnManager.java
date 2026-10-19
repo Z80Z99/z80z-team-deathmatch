@@ -116,7 +116,11 @@ public final class SpawnManager {
         };
         var parts = MapRegionActivation.activeRegions(map.customRegions(), context).stream()
                 .filter(region -> region.type().id().equals(type))
-                .flatMap(region -> region.region().boxes().stream()).toList();
+                .flatMap(region -> region.region().boxes().stream().map(box -> region.infiniteHeight()
+                        ? new MapDefinition.Region(
+                                new net.minecraft.core.BlockPos(box.min().getX(), map.bounds().min().getY(), box.min().getZ()),
+                                new net.minecraft.core.BlockPos(box.max().getX(), map.bounds().max().getY(), box.max().getZ()))
+                        : box)).toList();
         if (parts.isEmpty()) return null;
         var region = MapDefinition.Region.composite(parts);
         MapDefinition scoped = new MapDefinition(map.id(), map.displayName(), map.world(), region, region,
@@ -296,11 +300,11 @@ public final class SpawnManager {
             case TEAM_D -> "spawn_d";
             default -> "";
         };
-        var parts = MapRegionActivation.activeRegions(map.customRegions(), activationContext).stream()
+        var regions = MapRegionActivation.activeRegions(map.customRegions(), activationContext).stream()
                 .filter(region -> region.type().id().equals(type))
-                .flatMap(region -> region.region().boxes().stream()).toList();
-        if (!parts.isEmpty()) {
-            return MapDefinition.Region.composite(parts).contains(player.getX(), player.getY(), player.getZ());
+                .toList();
+        if (!regions.isEmpty()) {
+            return regions.stream().anyMatch(region -> region.contains(player.getX(), player.getY(), player.getZ()));
         }
         List<SpawnPoint> points = getSpawns(team);
         if (points.isEmpty()) return true;

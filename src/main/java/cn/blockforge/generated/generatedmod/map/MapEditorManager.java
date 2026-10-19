@@ -956,7 +956,7 @@ public final class MapEditorManager {
             }
             MapRegion updated = new MapRegion(selected.id(), selected.displayName(), selected.type(), next,
                     selected.visibleInMatch(), selected.displayRange(), selected.appearance(), selected.activation(),
-                    selected.activationValue(), selected.color(), selected.outline(), selected.fill(), selected.priority(), selected.notes());
+                    selected.activationValue(), selected.color(), selected.outline(), selected.fill(), selected.priority(), selected.notes(), selected.infiniteHeight());
             if (maps.saveDefinition(target.withRegion(updated))) {
                 maps.registry().deleteSnapshot(target.id());
                 drafts.remove(player.getUUID());
@@ -978,7 +978,7 @@ public final class MapEditorManager {
         MapRegion updated = new MapRegion(selected.id(), selected.displayName(), selected.type(), region,
                 selected.visibleInMatch(), selected.displayRange(), selected.appearance(),
                 selected.activation(), selected.activationValue(), selected.color(), selected.outline(),
-                selected.fill(), selected.priority(), selected.notes());
+                selected.fill(), selected.priority(), selected.notes(), selected.infiniteHeight());
         if (maps.saveDefinition(target.withRegion(updated))) {
             feedback(player, "区域范围已保存：" + updated.displayName(), false);
         } else {

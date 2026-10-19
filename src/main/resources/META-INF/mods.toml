@@ -1,14 +1,12 @@
 modLoader="javafml"
 loaderVersion="[47,)"
-license="MIT"
+license="All Rights Reserved"
 [[mods]]
 modId="${mod_id}"
 version="${mod_version}"
 displayName="${mod_name}"
-authors="Z80Z99"
-description='''团队死斗：大厅、匹配、地图编辑器、HUD 编辑器、金钱系统、对局商店与经典爆破模式。
-
-Team Deathmatch - lobby, matchmaking, map editor, HUD editor, economy, match shop and classic bomb mode.'''
+authors="AutoMods"
+description='''团队死斗'''
 [[dependencies.${mod_id}]]
 modId="forge"
 mandatory=true

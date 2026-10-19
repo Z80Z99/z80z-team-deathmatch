@@ -25,6 +25,7 @@ class RoomRulesTest {
     }
 
     @Test void defaultsAndTemplatesAlreadyApplyPolicies() {
+        assertEquals(10, RoomRules.fallback().roundEndDelaySeconds());
         assertFalse(RoomRules.fallback().requireBothTeams());
         for (GameMode mode : GameMode.values()) {
             RoomRules rules = RoomRules.templateFor(mode, RoomRules.fallback());

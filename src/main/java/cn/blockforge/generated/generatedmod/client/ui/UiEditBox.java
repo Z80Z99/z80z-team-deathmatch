@@ -9,6 +9,8 @@ import net.minecraft.network.chat.Component;
 public final class UiEditBox extends EditBox {
     /** 文字距左右边缘的内缩，和原版 bordered 输入框一致（各 4 像素）。 */
     private static final int TEXT_PADDING_X = 4;
+    private long lastFrame;
+    private float focusAmount;
 
     public UiEditBox(Font font, int x, int y, int width, int height, Component hint) {
         super(font, x, y, width, height, hint);
@@ -43,7 +45,12 @@ public final class UiEditBox extends EditBox {
         int width = getWidth();
         int height = getHeight();
         int background = isActive() ? 0xFF111214 : UiTheme.PANEL;
-        int border = isActive() && (isFocused() || isHovered()) ? UiTheme.ACCENT : UiTheme.BORDER_SUBTLE;
+        long now = System.nanoTime();
+        float elapsed = lastFrame == 0 ? 0 : Math.min(100, (now - lastFrame) / 1_000_000F);
+        lastFrame = now;
+        float target = isActive() && (isFocused() || isHovered()) ? 1 : 0;
+        focusAmount += (target - focusAmount) * (1 - (float) Math.exp(-elapsed / 70F));
+        int border = UiTheme.blend(UiTheme.BORDER_SUBTLE, UiTheme.ACCENT, focusAmount);
         graphics.fill(x, y, x + width, y + height, background);
         graphics.renderOutline(x, y, width, height, border);
         // bordered=false 时原版文字从控件左上角开始。只在绘制阶段平移画布，
