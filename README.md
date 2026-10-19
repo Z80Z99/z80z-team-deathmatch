@@ -97,4 +97,5 @@ Minecraft 1.20.1 · Forge 47.4.0 · Java 17 · Client and server
 
 ## 许可证
 
-All Rights Reserved，详见 [LICENSE](LICENSE)。
+MIT，详见 [LICENSE](LICENSE)。
+
