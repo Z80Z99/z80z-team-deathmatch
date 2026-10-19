@@ -49,7 +49,7 @@ import java.util.stream.Collectors;
  * creative tabs; persisted entries retain complete ItemStack NBT.
  */
 public final class WeaponRepositoryManager {
-    private static final Logger LOGGER = LoggerFactory.getLogger("generated_mod_weapon_repository");
+    private static final Logger LOGGER = LoggerFactory.getLogger("z80z_team_deathmatch_weapon_repository");
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
     private static final int MAX_CATALOG = 1024;
     private static final int MAX_REPOSITORY = 512;

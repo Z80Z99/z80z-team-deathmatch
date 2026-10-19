@@ -34,7 +34,7 @@ import java.util.Set;
  * （比分记录条、状态文字、击杀播报、场景横幅）与全局的背景图 / 参考线。
  */
 public final class ClientHudLayout {
-    private static final Logger LOGGER = LoggerFactory.getLogger("generated_mod_hud_layout");
+    private static final Logger LOGGER = LoggerFactory.getLogger("z80z_team_deathmatch_hud_layout");
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
     private static final int VERSION = 10;
     private static final int SCORE_BIT = 1;

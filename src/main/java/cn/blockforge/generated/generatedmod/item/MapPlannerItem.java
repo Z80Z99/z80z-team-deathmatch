@@ -17,7 +17,7 @@ public class MapPlannerItem extends Item {
 
     @Override
     public void appendHoverText(ItemStack stack, Level level, List<Component> tooltip, TooltipFlag flag) {
-        tooltip.add(Component.translatable("item.generated_mod.map_planner.tooltip")
+        tooltip.add(Component.translatable("item.z80z_team_deathmatch.map_planner.tooltip")
                 .withStyle(ChatFormatting.GRAY));
     }
 }

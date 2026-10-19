@@ -5,7 +5,7 @@
     64
   ],
   "textures": {
-    "0": "generated_mod:item/tablet",
+    "0": "z80z_team_deathmatch:item/tablet",
     "particle": "#0"
   },
   "elements": [

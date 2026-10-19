@@ -17,7 +17,7 @@ public class JammerTabletItem extends Item {
 
     @Override
     public void appendHoverText(ItemStack stack, Level level, List<Component> tooltip, TooltipFlag flag) {
-        tooltip.add(Component.translatable("item.generated_mod.jammer_tablet.tooltip")
+        tooltip.add(Component.translatable("item.z80z_team_deathmatch.jammer_tablet.tooltip")
                 .withStyle(ChatFormatting.GRAY));
     }
 }

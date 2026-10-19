@@ -29,7 +29,7 @@ import java.util.UUID;
 
 /** Writes a persistent match log and turns the finished log into books for participants. */
 public final class MatchRecordManager {
-    private static final Logger LOGGER = LoggerFactory.getLogger("generated_mod_match_records");
+    private static final Logger LOGGER = LoggerFactory.getLogger("z80z_team_deathmatch_match_records");
     private static final DateTimeFormatter FILE_TIME = DateTimeFormatter.ofPattern("yyyyMMdd-HHmmss");
     private static final int PAGE_CHARACTERS = 220;
     private static final int MAX_BOOK_PAGES = 50;

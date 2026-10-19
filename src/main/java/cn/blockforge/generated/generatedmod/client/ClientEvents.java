@@ -14,28 +14,28 @@ import net.minecraftforge.fml.common.Mod;
 public final class ClientEvents {
     /** K：地图工作台独立入口。 */
     public static final KeyMapping OPEN_MAP_WORKBENCH_KEY = new KeyMapping(
-            "key.generated_mod.open_map_workbench",
+            "key.z80z_team_deathmatch.open_map_workbench",
             InputConstants.Type.KEYSYM,
             InputConstants.KEY_K,
-            "key.categories.generated_mod");
+            "key.categories.z80z_team_deathmatch");
     /** J：游戏大厅选项菜单。 */
     public static final KeyMapping OPEN_LOBBY_KEY = new KeyMapping(
-            "key.generated_mod.open_lobby",
+            "key.z80z_team_deathmatch.open_lobby",
             InputConstants.Type.KEYSYM,
             InputConstants.KEY_J,
-            "key.categories.generated_mod");
+            "key.categories.z80z_team_deathmatch");
     /** H：HUD 配置窗。 */
     public static final KeyMapping OPEN_HUD_KEY = new KeyMapping(
-            "key.generated_mod.open_hud",
+            "key.z80z_team_deathmatch.open_hud",
             InputConstants.Type.KEYSYM,
             InputConstants.KEY_H,
-            "key.categories.generated_mod");
+            "key.categories.z80z_team_deathmatch");
     /** B：对局内商店。 */
     public static final KeyMapping OPEN_MATCH_SHOP_KEY = new KeyMapping(
-            "key.generated_mod.open_match_shop",
+            "key.z80z_team_deathmatch.open_match_shop",
             InputConstants.Type.KEYSYM,
             InputConstants.KEY_B,
-            "key.categories.generated_mod");
+            "key.categories.z80z_team_deathmatch");
 
     private ClientEvents() {
     }
@@ -50,9 +50,9 @@ public final class ClientEvents {
 
     @SubscribeEvent
     public static void registerOverlays(RegisterGuiOverlaysEvent event) {
-        event.registerAbove(VanillaGuiOverlay.CROSSHAIR.id(), "generated_mod_match_hud", MatchHudOverlay::render);
-        event.registerAbove(VanillaGuiOverlay.CROSSHAIR.id(), "generated_mod_scene_hud", SceneHudOverlay::render);
-        event.registerAbove(VanillaGuiOverlay.CROSSHAIR.id(), "generated_mod_map_tool_hud", MapToolHud::render);
-        event.registerAboveAll("generated_mod_respawn", RespawnOverlay::render);
+        event.registerAbove(VanillaGuiOverlay.CROSSHAIR.id(), "z80z_team_deathmatch_match_hud", MatchHudOverlay::render);
+        event.registerAbove(VanillaGuiOverlay.CROSSHAIR.id(), "z80z_team_deathmatch_scene_hud", SceneHudOverlay::render);
+        event.registerAbove(VanillaGuiOverlay.CROSSHAIR.id(), "z80z_team_deathmatch_map_tool_hud", MapToolHud::render);
+        event.registerAboveAll("z80z_team_deathmatch_respawn", RespawnOverlay::render);
     }
 }

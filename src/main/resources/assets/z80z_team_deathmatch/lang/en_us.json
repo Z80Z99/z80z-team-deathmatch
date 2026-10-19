@@ -1,0 +1,15 @@
+{
+  "key.z80z_team_deathmatch.open_map_workbench": "Open Map Workbench",
+  "key.z80z_team_deathmatch.open_lobby": "Open Lobby Menu",
+  "key.z80z_team_deathmatch.open_hud": "Open HUD Config Window",
+  "key.z80z_team_deathmatch.open_match_shop": "Open Match Shop",
+  "key.categories.z80z_team_deathmatch": "Team Deathmatch",
+  "item.z80z_team_deathmatch.map_planner": "Tactical Map Tablet",
+  "item.z80z_team_deathmatch.map_planner.tooltip": "Right-click to open planning; left-click to select the aimed region.",
+  "item.z80z_team_deathmatch.map_brush": "Survey Laser Pointer",
+  "item.z80z_team_deathmatch.map_brush.tooltip": "Left-click to mark or remove, right-click to confirm or draw; sneak right-click opens settings.",
+  "item.z80z_team_deathmatch.c4": "C4 Explosive",
+  "item.z80z_team_deathmatch.c4.tooltip": "Explosive for Search & Destroy matches.",
+  "item.z80z_team_deathmatch.jammer_tablet": "Bomb Jammer",
+  "item.z80z_team_deathmatch.jammer_tablet.tooltip": "Defuse 50% faster and connect a fishing line to the bomb."
+}

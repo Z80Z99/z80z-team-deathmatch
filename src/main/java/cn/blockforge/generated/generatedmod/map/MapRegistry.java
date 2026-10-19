@@ -28,7 +28,7 @@ import java.util.stream.Stream;
 
 /** 负责从 config/fpsmod/maps 读取和写回地图定义。 */
 public final class MapRegistry {
-    private static final Logger LOGGER = LoggerFactory.getLogger("generated_mod_maps");
+    private static final Logger LOGGER = LoggerFactory.getLogger("z80z_team_deathmatch_maps");
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
 
     private final Path directory;

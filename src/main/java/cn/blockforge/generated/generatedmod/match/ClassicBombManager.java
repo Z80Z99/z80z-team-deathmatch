@@ -37,9 +37,9 @@ import java.util.UUID;
 
 /** Server-authoritative manager for the two-team classic bomb objective. */
 public final class ClassicBombManager {
-    private static final String MATCH_ITEM_TAG = "generated_mod_classic_bomb";
-    private static final String ROUND_TAG = "generated_mod_bomb_round";
-    private static final String ROLE_TAG = "generated_mod_bomb_role";
+    private static final String MATCH_ITEM_TAG = "z80z_team_deathmatch_classic_bomb";
+    private static final String ROUND_TAG = "z80z_team_deathmatch_bomb_round";
+    private static final String ROLE_TAG = "z80z_team_deathmatch_bomb_role";
     private static final int DEFUSE_DISTANCE_SQUARED = 9;
 
     private final MatchManager match;

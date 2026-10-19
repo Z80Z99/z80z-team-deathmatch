@@ -32,7 +32,7 @@ import java.util.UUID;
 
 /** Server-authoritative dual-ledger economy: persistent lobby account and per-match account. */
 public final class EconomyManager {
-    private static final Logger LOGGER = LoggerFactory.getLogger("generated_mod_economy");
+    private static final Logger LOGGER = LoggerFactory.getLogger("z80z_team_deathmatch_economy");
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
 
     private final MinecraftServer server;

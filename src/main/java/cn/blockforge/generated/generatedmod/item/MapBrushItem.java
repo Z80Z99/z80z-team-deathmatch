@@ -17,7 +17,7 @@ public class MapBrushItem extends Item {
 
     @Override
     public void appendHoverText(ItemStack stack, Level level, List<Component> tooltip, TooltipFlag flag) {
-        tooltip.add(Component.translatable("item.generated_mod.map_brush.tooltip")
+        tooltip.add(Component.translatable("item.z80z_team_deathmatch.map_brush.tooltip")
                 .withStyle(ChatFormatting.GRAY));
     }
 }

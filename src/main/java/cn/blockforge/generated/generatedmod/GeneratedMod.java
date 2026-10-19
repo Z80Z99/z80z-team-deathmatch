@@ -13,7 +13,7 @@ import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 
 @Mod(GeneratedMod.MOD_ID)
 public final class GeneratedMod {
-    public static final String MOD_ID = "generated_mod";
+    public static final String MOD_ID = "z80z_team_deathmatch";
     public static final String MOD_NAME = "团队死斗";
 
     public GeneratedMod() {

@@ -32,7 +32,7 @@ import java.util.UUID;
  * 邀请码把某张地图共享给其他玩家，导入者获得一份属于自己、之后独立编辑的副本。</p>
  */
 public final class MapOwnershipStore {
-    private static final Logger LOGGER = LoggerFactory.getLogger("generated_mod_map_index");
+    private static final Logger LOGGER = LoggerFactory.getLogger("z80z_team_deathmatch_map_index");
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
     private static final String CODE_ALPHABET = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
     private static final int CODE_LENGTH = 6;

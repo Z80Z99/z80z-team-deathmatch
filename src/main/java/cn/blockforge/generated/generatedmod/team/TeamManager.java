@@ -28,7 +28,7 @@ public final class TeamManager {
     private final MatchManager matchManager;
     private final Map<UUID, Team> playerTeams = new HashMap<>();
     private final Map<UUID, Team> preferences = new HashMap<>();
-    private static final String ORIGINAL_STATE_KEY = "generated_mod_original_state";
+    private static final String ORIGINAL_STATE_KEY = "z80z_team_deathmatch_original_state";
     private final Map<UUID, OriginalState> originalStates = new HashMap<>();
     private final Set<UUID> pendingPlayers = new HashSet<>();
 
@@ -395,18 +395,18 @@ public final class TeamManager {
 
     private void removeFromScoreboard(ServerPlayer player) {
         PlayerTeam old = server.getScoreboard().getPlayersTeam(player.getScoreboardName());
-        if (old != null && old.getName().startsWith("generated_mod_team_")) {
+        if (old != null && old.getName().startsWith("z80z_team_deathmatch_team_")) {
             server.getScoreboard().removePlayerFromTeam(player.getScoreboardName(), old);
         }
     }
 
     private static String scoreboardTeamName(Team team) {
         return switch (team) {
-            case TEAM_A -> "generated_mod_team_a";
-            case TEAM_B -> "generated_mod_team_b";
-            case TEAM_C -> "generated_mod_team_c";
-            case TEAM_D -> "generated_mod_team_d";
-            case SPECTATOR -> "generated_mod_team_spectator";
+            case TEAM_A -> "z80z_team_deathmatch_team_a";
+            case TEAM_B -> "z80z_team_deathmatch_team_b";
+            case TEAM_C -> "z80z_team_deathmatch_team_c";
+            case TEAM_D -> "z80z_team_deathmatch_team_d";
+            case SPECTATOR -> "z80z_team_deathmatch_team_spectator";
         };
     }
 

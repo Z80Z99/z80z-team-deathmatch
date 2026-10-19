@@ -20,7 +20,7 @@ import java.util.List;
 import java.util.Optional;
 
 public final class SpawnPointManager extends SavedData {
-    private static final String DATA_NAME = "generated_mod_fps_arena";
+    private static final String DATA_NAME = "z80z_team_deathmatch_fps_arena";
     private final EnumMap<Team, List<SpawnPoint>> teamSpawns = new EnumMap<>(Team.class);
     private SpawnPoint lobbySpawn;
     private ResourceKey<Level> regionDimension;
@@ -270,10 +270,10 @@ public final class SpawnPointManager extends SavedData {
         if (scoreboardTeam == null) {
             return Team.SPECTATOR;
         }
-        if ("generated_mod_team_a".equals(scoreboardTeam.getName())) {
+        if ("z80z_team_deathmatch_team_a".equals(scoreboardTeam.getName())) {
             return Team.TEAM_A;
         }
-        if ("generated_mod_team_b".equals(scoreboardTeam.getName())) {
+        if ("z80z_team_deathmatch_team_b".equals(scoreboardTeam.getName())) {
             return Team.TEAM_B;
         }
         return Team.SPECTATOR;

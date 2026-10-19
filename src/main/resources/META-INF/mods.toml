@@ -1,11 +1,11 @@
 modLoader="javafml"
 loaderVersion="[47,)"
-license="All Rights Reserved"
+license="MIT"
 [[mods]]
 modId="${mod_id}"
 version="${mod_version}"
 displayName="${mod_name}"
-authors="AutoMods"
+authors="Z80Z99"
 description='''团队死斗'''
 [[dependencies.${mod_id}]]
 modId="forge"

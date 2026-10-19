@@ -15,7 +15,7 @@ import java.util.Optional;
 
 /** 地图生命周期管理器，不处理武器、伤害、击杀或 TDM 计分。 */
 public final class MapManager {
-    private static final Logger LOGGER = LoggerFactory.getLogger("generated_mod_map_manager");
+    private static final Logger LOGGER = LoggerFactory.getLogger("z80z_team_deathmatch_map_manager");
 
     private final MinecraftServer server;
     private final MapRegistry registry;

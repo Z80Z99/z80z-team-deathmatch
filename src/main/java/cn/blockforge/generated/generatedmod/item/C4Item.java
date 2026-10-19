@@ -17,7 +17,7 @@ public class C4Item extends Item {
 
     @Override
     public void appendHoverText(ItemStack stack, Level level, List<Component> tooltip, TooltipFlag flag) {
-        tooltip.add(Component.translatable("item.generated_mod.c4.tooltip")
+        tooltip.add(Component.translatable("item.z80z_team_deathmatch.c4.tooltip")
                 .withStyle(ChatFormatting.GRAY));
     }
 }

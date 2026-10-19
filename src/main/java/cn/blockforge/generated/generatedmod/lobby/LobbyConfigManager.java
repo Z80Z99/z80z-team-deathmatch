@@ -19,7 +19,7 @@ import java.nio.file.StandardCopyOption;
 
 /** 持久化大厅设置，不依赖 Forge 的通用比赛配置。 */
 public final class LobbyConfigManager {
-    private static final Logger LOGGER = LoggerFactory.getLogger("generated_mod_lobby_config");
+    private static final Logger LOGGER = LoggerFactory.getLogger("z80z_team_deathmatch_lobby_config");
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
 
     private final Path file;

@@ -5,7 +5,7 @@
     64
   ],
   "textures": {
-    "0": "generated_mod:item/laser_pointer",
+    "0": "z80z_team_deathmatch:item/laser_pointer",
     "particle": "#0"
   },
   "elements": [

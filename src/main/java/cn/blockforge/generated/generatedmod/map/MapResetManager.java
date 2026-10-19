@@ -25,7 +25,7 @@ import java.util.concurrent.CompletionException;
 
 /** 在 Dedicated Server 主线程上按 tick 捕获和恢复地图方块。 */
 public final class MapResetManager {
-    private static final Logger LOGGER = LoggerFactory.getLogger("generated_mod_map_reset");
+    private static final Logger LOGGER = LoggerFactory.getLogger("z80z_team_deathmatch_map_reset");
 
     private final MinecraftServer server;
     private final Path snapshotFile;

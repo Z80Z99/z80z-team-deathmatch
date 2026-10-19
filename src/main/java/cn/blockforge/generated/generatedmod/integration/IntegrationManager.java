@@ -7,7 +7,7 @@ import org.slf4j.LoggerFactory;
 import java.util.List;
 
 public final class IntegrationManager {
-    private static final Logger LOGGER = LoggerFactory.getLogger("generated_mod_integration");
+    private static final Logger LOGGER = LoggerFactory.getLogger("z80z_team_deathmatch_integration");
     private static final List<String> GD656_IDS = List.of(
             "gd656killicon", "gd656_killicon", "gd656killcon", "gd656_killcon", "killcon");
     private static boolean detected;

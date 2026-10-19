@@ -377,10 +377,10 @@ public final class SpawnManager {
             return Team.SPECTATOR;
         }
         return switch (scoreboardTeam.getName()) {
-            case "generated_mod_team_a" -> Team.TEAM_A;
-            case "generated_mod_team_b" -> Team.TEAM_B;
-            case "generated_mod_team_c" -> Team.TEAM_C;
-            case "generated_mod_team_d" -> Team.TEAM_D;
+            case "z80z_team_deathmatch_team_a" -> Team.TEAM_A;
+            case "z80z_team_deathmatch_team_b" -> Team.TEAM_B;
+            case "z80z_team_deathmatch_team_c" -> Team.TEAM_C;
+            case "z80z_team_deathmatch_team_d" -> Team.TEAM_D;
             default -> Team.SPECTATOR;
         };
     }
